@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-
 const Schema = mongoose.Schema;
-
+// define workout schema
+// two fields: one Date, one array of objects
 const WorkoutSchema = new Schema({
     day: { type: Date, default: Date.now },
     exercises: [{
@@ -19,6 +19,7 @@ const WorkoutSchema = new Schema({
   }
   );
   
+  // define a getter virtual to compute the total duration of workout
   WorkoutSchema.virtual("totalDuration").get(function(){
     let total = 0;
     for (let i = 0; i < this.exercises.length; i++){
@@ -27,7 +28,9 @@ const WorkoutSchema = new Schema({
     return total;
   });
 
+  // save the model
   const Workout = mongoose.model("Workout", WorkoutSchema);
   
+  // export it
   module.exports = Workout;
   
